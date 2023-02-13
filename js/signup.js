@@ -12,7 +12,7 @@ btnSignup.addEventListener("click", async (e) => {
 
     await axios({
       method: "POST",
-      url: `${URL}/api/v1/users`,
+      url: `${URL}/api/v1/users/signup`,
       data: {
         name,
         email,
