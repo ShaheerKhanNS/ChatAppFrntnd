@@ -8,20 +8,25 @@ btnLogin.addEventListener("click", async (e) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const response = await axios({
-      method: "POST",
-      url: `${URL}/api/v1/users/login`,
-      data: {
-        email,
-        password,
-      },
-    });
+    if (email && password) {
+      const response = await axios({
+        method: "POST",
+        url: `${URL}/api/v1/users/login`,
+        data: {
+          email,
+          password,
+        },
+      });
 
-    if (response.data.status === "success") {
-      alert(response.data.message);
-      localStorage.setItem("token", response.data.token);
+      if (response.data.status === "success") {
+        console.log(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        alert(response.data.message);
+      }
+    } else {
+      alert("please provide your email and password to login❗");
     }
   } catch (err) {
-    console.log(JSON.stringify(err));
+    document.body.innerHTML += `<p class="container error">${err.message}</p>`;
   }
 });
