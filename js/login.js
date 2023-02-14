@@ -16,9 +16,10 @@ btnLogin.addEventListener("click", async (e) => {
         password,
       },
     });
-    console.log(response);
+
     if (response.data.status === "success") {
       alert(response.data.message);
+      localStorage.setItem("token", response.data.token);
     }
   } catch (err) {
     console.log(JSON.stringify(err));
