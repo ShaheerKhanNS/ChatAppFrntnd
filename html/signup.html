@@ -35,12 +35,27 @@
         margin-top: 20px;
         color: red;
       }
+      a {
+        text-decoration: none;
+        color: #087f5b;
+        margin-top: 25px;
+      }
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+      h4 {
+        color: #1971c2;
+      }
+      h3 {
+        color: #1864ab;
+      }
     </style>
   </head>
   <body>
     <div class="main-container">
       <div class="container">
-        <h3>Create Account</h3>
+        <h3>Create profile</h3>
         <h4>Connect with your friends today!</h4>
       </div>
       <div class="container">
@@ -59,7 +74,10 @@
           />
           <label for="password" class="form-label">Password:</label>
           <input id="password" type="password" class="form-control" required />
-          <button id="signup" class="btn btn-outline-success">Signup</button>
+          <div class="buttons">
+            <button id="signup" class="btn btn-outline-success">Signup</button>
+            <a href="http://127.0.0.1:8080/html/login.html">Existing user😎</a>
+          </div>
         </form>
       </div>
     </div>

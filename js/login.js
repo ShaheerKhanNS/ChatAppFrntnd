@@ -19,9 +19,10 @@ btnLogin.addEventListener("click", async (e) => {
       });
 
       if (response.data.status === "success") {
-        console.log(response.data.token);
+        // console.log(response.data.token);
         localStorage.setItem("token", response.data.token);
         alert(response.data.message);
+        window.location.replace("http://127.0.0.1:8080/html/chat.html");
       }
     } else {
       alert("please provide your email and password to login❗");

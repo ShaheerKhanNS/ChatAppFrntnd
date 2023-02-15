@@ -40,6 +40,23 @@
       .error {
         color: red;
       }
+      a {
+        text-decoration: none;
+        color: #ff8787;
+        /* display: flex;
+        justify-content: center; */
+        margin-top: 25px;
+      }
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+      h4 {
+        color: #1971c2;
+      }
+      h3 {
+        color: #1864ab;
+      }
     </style>
   </head>
   <body>
@@ -51,7 +68,11 @@
         <input type="email" class="form-control" id="email" required />
         <label for="password" class="form-label">Password:</label>
         <input type="password" id="password" class="form-control" required />
-        <button id="login" class="btn btn-outline-danger">Login</button>
+        <div class="buttons">
+          <button id="login" class="btn btn-outline-danger">Login</button>
+          <a href="#">Forgot Password </a>
+          <a href="http://127.0.0.1:8080/html/signup.html">New User🤩</a>
+        </div>
       </form>
     </div>
     <script
