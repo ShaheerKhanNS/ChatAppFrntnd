@@ -32,23 +32,35 @@ const renderTemplate = (message) => {
 
 const retrieveMessages = async () => {
   try {
-    const messages = await axios({
-      method: "GET",
-      url: `${URL}/api/v1/message`,
-      headers: { Authorization: token },
-    });
-
     // To clear the previous clutter
     const chatBox = document.querySelector(".main_div");
     chatBox.innerHTML = "";
-
-    messages.data.data.forEach((data) => {
-      renderTemplate(data.message);
+    // LS Stands for local storage we are storing the message in local storage for better optimization
+    const messageLS = JSON.parse(localStorage.getItem("message"));
+    let lastmessageid;
+    if (messageLS) {
+      messageLS.forEach((data) => {
+        renderTemplate(data.message);
+      });
+      lastmessageid = messageLS[messageLS.length - 1].id;
+    }
+    const messages = await axios({
+      method: "GET",
+      url: `${URL}/api/v1/message?lastmessageid=${lastmessageid}`,
+      headers: { Authorization: token },
     });
+
+    let mergedMessages;
+    if (messageLS) {
+      mergedMessages = [...messageLS, ...messages.data.data];
+    } else {
+      mergedMessages = [...messages.data.data];
+    }
+    localStorage.setItem("message", JSON.stringify(mergedMessages));
   } catch (err) {
     console.log(JSON.stringify(err));
   }
 };
 
 window.addEventListener("DOMContentLoaded", retrieveMessages);
-setInterval(retrieveMessages, 1000);
+setInterval(retrieveMessages, 500);
