@@ -45,6 +45,65 @@
         display: flex;
         flex-direction: column;
       }
+      .box-group {
+        display: contents;
+      }
+      .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .chat-header {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px;
+      }
+
+      .chat-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+      }
+
+      .message {
+        margin-bottom: 10px;
+      }
+
+      .message-author {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .chat-input {
+        display: flex;
+        align-items: center;
+        background-color: #f2f2f2;
+        padding: 10px;
+      }
+
+      .chat-input input[type="text"] {
+        flex: 1;
+        margin-right: 10px;
+        padding: 10px;
+        border: none;
+      }
+
+      .chat-input button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .chat-input button:hover {
+        opacity: 0.8;
+      }
+
+      .chat-input button:active {
+        background-color: #3e8e41;
+      }
     </style>
   </head>
   <body>
@@ -63,6 +122,13 @@
         <button id="logout" style="margin-top: 20px" class="btn btn-danger">
           Logout
         </button>
+        <button
+          id="close-chatbox"
+          style="margin-top: 20px"
+          class="btn btn-danger btn-sm card-model"
+        >
+          CloseGroup
+        </button>
       </div>
       <div class="box">
         <h3>Welcome to this simple group chat application.</h3>
@@ -70,6 +136,39 @@
           If you Find any bug please let us know. This is currently running on
           version 1.
         </p>
+        <div id="chat-container-box" class="card-model">
+          <div class="chat-header">
+            <h2>Group Chat</h2>
+          </div>
+          <div class="chat-messages">
+            <div class="message">
+              <div class="message-author">John Doe</div>
+              <div class="message-text">Hi everyone, how's it going?</div>
+            </div>
+            <div class="message">
+              <div class="message-author">Jane Smith</div>
+              <div class="message-text">Good, thanks for asking!</div>
+            </div>
+            <div class="message">
+              <div class="message-author">Jane Smith</div>
+              <div class="message-text">Good, thanks for asking!</div>
+            </div>
+            <div class="message">
+              <div class="message-author">Jane Smith</div>
+              <div class="message-text">Good, thanks for asking!</div>
+            </div>
+            <div class="message">
+              <div class="message-author">Jane Smith</div>
+              <div class="message-text">Good, thanks for asking!</div>
+            </div>
+            <!-- More messages go here -->
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Type a message..." />
+            <button>Send</button>
+          </div>
+        </div>
+
         <form id="form-el" class="card-model">
           <label class="form-label" for="groupname">GroupName:</label>
           <input type="text" id="groupname" class="form-control" />
@@ -135,8 +234,9 @@
           </form>
         </div>
       </div>
-      <div class="box box-group">
+      <div class="box">
         <button class="btn btn-info" disabled>Your Groups</button>
+        <div class="box-group"></div>
       </div>
     </div>
     <script

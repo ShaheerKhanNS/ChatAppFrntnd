@@ -1,6 +1,9 @@
+//  btnCreateGroup is an Btn element used to show group creation form
 const btnCreateGroup = document.getElementById("createGroup");
 const btnLogout = document.getElementById("logout");
 const btnClose = document.getElementById("close");
+
+//  btngroupCreate takes the details for group creation and do a axios POST call.
 const btngroupCreate = document.getElementById("create-group");
 const editGroupBtn = document.getElementById("editGroup-display");
 const editCloseBtn = document.getElementById("closeBtn");
@@ -13,6 +16,7 @@ const URL = "http://127.0.0.1:3000";
 // Elements
 const formEL = document.getElementById("form-el");
 const divEl = document.getElementById("grp-modify");
+const groupContainer = document.querySelector(".box-group");
 
 btnCreateGroup.addEventListener("click", (e) => {
   e.preventDefault();
@@ -111,6 +115,7 @@ const groups = async () => {
       url: `${URL}/api/v1/group`,
       headers: { Authorization: token },
     });
+
     groups.data.data.forEach((group) => {
       renderGroups(group.groupName, group.id);
     });
@@ -119,12 +124,36 @@ const groups = async () => {
   }
 };
 
+// Showing User the group he belongs to.....
 groups();
 
 const renderGroups = (groupName, id) => {
-  const groupContainer = document.querySelector(".box-group");
-
   const template = `<button style="margin-top: 10px;" data-id="${id}"  class="btn btn-outline-secondary" >${groupName}</button>`;
 
   return (groupContainer.innerHTML += template);
 };
+
+// Buttons and Elements for chat container
+// Mission to integrate the group chat field here so that user will not be redirected to another page.
+
+const chatContainerBox = document.getElementById("chat-container-box");
+const closechatBtn = document.getElementById("close-chatbox");
+
+//  Closing Chatbox
+
+closechatBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  chatContainerBox.classList.remove("chat-container");
+  chatContainerBox.classList.add("card-model");
+  closechatBtn.classList.add("card-model");
+});
+
+groupContainer.addEventListener("click", (e) => {
+  const groupId = e.target.dataset.id;
+  console.log(groupId);
+
+  // Frontend design
+  closechatBtn.classList.remove("card-model");
+  chatContainerBox.classList.remove("card-model");
+  chatContainerBox.classList.add("chat-container");
+});
