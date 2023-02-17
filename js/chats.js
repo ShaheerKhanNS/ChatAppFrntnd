@@ -52,15 +52,22 @@ const retrieveMessages = async () => {
 
     let mergedMessages;
     if (messageLS) {
+      // Deleting old messages
+      if (messageLS.length >= 10) {
+        messageLS.splice(0, 3);
+      }
+
       mergedMessages = [...messageLS, ...messages.data.data];
     } else {
       mergedMessages = [...messages.data.data];
     }
+    console.log(mergedMessages, lastmessageid, messages);
     localStorage.setItem("message", JSON.stringify(mergedMessages));
   } catch (err) {
+    console.log("Iam error");
     console.log(JSON.stringify(err));
   }
 };
 
 window.addEventListener("DOMContentLoaded", retrieveMessages);
-setInterval(retrieveMessages, 500);
+// setInterval(retrieveMessages, 500);
