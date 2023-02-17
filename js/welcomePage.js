@@ -65,14 +65,66 @@ editCloseBtn.addEventListener("click", (e) => {
   divEl.classList.add("card-model");
 });
 
+const clearFields = () => {
+  document.getElementById("groupname-add").value = document.getElementById(
+    "email-joinee"
+  ).value = "";
+  document.getElementById("isAdmin").checked = false;
+};
+
 addUserBtn.addEventListener("click", async (e) => {
   try {
     e.preventDefault();
     const groupName = document.getElementById("groupname-add").value;
     const email = document.getElementById("email-joinee").value;
     const isAdmin = document.getElementById("isAdmin").checked;
-    console.log(groupName, email, isAdmin);
+
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/v1/group/adduser`,
+      headers: { Authorization: token },
+      data: {
+        groupName,
+        email,
+        isAdmin,
+      },
+    });
+
+    console.log(response.status);
+
+    if (response.status === 200) {
+      alert("User added to your group");
+      clearFields();
+    } else if (response.status === 201) {
+      alert("User status updated");
+      clearFields();
+    }
   } catch (err) {
     console.log(`I am in adduser error block ${JSON.stringify(err)}`);
   }
 });
+
+const groups = async () => {
+  try {
+    const groups = await axios({
+      method: "GET",
+      url: `${URL}/api/v1/group`,
+      headers: { Authorization: token },
+    });
+    groups.data.data.forEach((group) => {
+      renderGroups(group.groupName, group.id);
+    });
+  } catch (err) {
+    console.log(`I am in groups error block ${JSON.stringify(err)}`);
+  }
+};
+
+groups();
+
+const renderGroups = (groupName, id) => {
+  const groupContainer = document.querySelector(".box-group");
+
+  const template = `<button style="margin-top: 10px;" data-id="${id}"  class="btn btn-outline-secondary" >${groupName}</button>`;
+
+  return (groupContainer.innerHTML += template);
+};
