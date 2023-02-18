@@ -138,34 +138,18 @@
         </p>
         <div id="chat-container-box" class="card-model">
           <div class="chat-header">
-            <h2>Group Chat</h2>
+            <h2 id="group-name">Group Chat</h2>
           </div>
-          <div class="chat-messages">
-            <div class="message">
-              <div class="message-author">John Doe</div>
-              <div class="message-text">Hi everyone, how's it going?</div>
-            </div>
-            <div class="message">
-              <div class="message-author">Jane Smith</div>
-              <div class="message-text">Good, thanks for asking!</div>
-            </div>
-            <div class="message">
-              <div class="message-author">Jane Smith</div>
-              <div class="message-text">Good, thanks for asking!</div>
-            </div>
-            <div class="message">
-              <div class="message-author">Jane Smith</div>
-              <div class="message-text">Good, thanks for asking!</div>
-            </div>
-            <div class="message">
-              <div class="message-author">Jane Smith</div>
-              <div class="message-text">Good, thanks for asking!</div>
-            </div>
+          <div id="group-message-div" class="chat-messages">
             <!-- More messages go here -->
           </div>
           <div class="chat-input">
-            <input type="text" placeholder="Type a message..." />
-            <button>Send</button>
+            <input
+              id="groupMessage"
+              type="text"
+              placeholder="Type a message..."
+            />
+            <button id="btn-sendMessage">Send</button>
           </div>
         </div>
 

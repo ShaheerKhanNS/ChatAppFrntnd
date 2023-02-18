@@ -17,6 +17,7 @@ const URL = "http://127.0.0.1:3000";
 const formEL = document.getElementById("form-el");
 const divEl = document.getElementById("grp-modify");
 const groupContainer = document.querySelector(".box-group");
+const msgDsplBox = document.getElementById("group-message-div");
 
 btnCreateGroup.addEventListener("click", (e) => {
   e.preventDefault();
@@ -148,12 +149,86 @@ closechatBtn.addEventListener("click", (e) => {
   closechatBtn.classList.add("card-model");
 });
 
-groupContainer.addEventListener("click", (e) => {
-  const groupId = e.target.dataset.id;
-  console.log(groupId);
+// Rendering Messages
 
+const renderMessage = (userName, message) => {
+  const template = `<div class="message">
+              <div class="message-author">${
+                userName.charAt(0).toUpperCase() + userName.slice(1)
+              }</div>
+              <div class="message-text">${message}</div>
+            </div>`;
+
+  msgDsplBox.innerHTML += template;
+};
+
+// Retriving messages
+
+const retriveMessages = async () => {
+  try {
+    const messages = await axios({
+      method: "GET",
+      url: `${URL}/api/v1/message/${groupId}`,
+      headers: { Authorization: token },
+    });
+
+    // This is used to display the name of the group in the chat-box head
+    const grpName = document.getElementById("group-name");
+    grpName.textContent = groupNameRender;
+    // To remove the previous clutter
+    msgDsplBox.innerHTML = "";
+    messages.data.data.forEach((data) => {
+      renderMessage(data.userName, data.message);
+    });
+  } catch (err) {
+    console.log(
+      `I am in error block of retriving messages ${JSON.stringify(err)}`
+    );
+  }
+};
+
+// Getting the groupId we are intrested in!
+
+let groupId;
+let groupNameRender;
+groupContainer.addEventListener("click", (e) => {
+  groupId = e.target.dataset.id;
+  groupNameRender = e.target.textContent;
+  console.log(groupNameRender);
   // Frontend design
   closechatBtn.classList.remove("card-model");
   chatContainerBox.classList.remove("card-model");
   chatContainerBox.classList.add("chat-container");
+  retriveMessages();
+});
+
+// Important task Sending message from front end on a selected group. For that i have added a onsubmit sendMessage function in the button element
+
+const sendMsgBtn = document.getElementById("btn-sendMessage");
+
+sendMsgBtn.addEventListener("click", async () => {
+  try {
+    const message = document.getElementById("groupMessage").value;
+    console.log(`Button clicked on group ${groupId}`, message);
+
+    const response = await axios({
+      method: "POST",
+      url: `${URL}/api/v1/message`,
+      headers: { Authorization: token },
+      data: {
+        message,
+        groupId,
+      },
+    });
+
+    if (response.status === 200) {
+      document.getElementById("groupMessage").value = "";
+    } else {
+      alert("Something went wrong try aftersometime");
+    }
+  } catch (err) {
+    console.log(
+      `I am in error block of sending message ${JSON.stringify(err)}`
+    );
+  }
 });
